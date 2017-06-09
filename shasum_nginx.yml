@@ -1,0 +1,37 @@
+---
+# file: shasum_nginx.yml
+
+- name: Apply base configuration to all hosts
+  hosts: localhost
+  vars:
+    nginx_url: "http://nginx.org/download/nginx-1.13.1.tar.gz"
+    nginx_file: "./nginx-1.13.1.tar.gz"
+
+  tasks:
+    # - debug:
+    #     msg: "{{ ansible_distribution }}_{{ ansible_distribution_major_version }}"
+
+    - name: Download NGINX v1.13.1
+      get_url:
+        url: "{{ nginx_url }}"
+        dest: "{{ nginx_file }}"
+        mode: 0664
+
+    - name: Wait for NGINX gzip to be downloaded
+      wait_for:
+        path: "{{ nginx_file }}"
+        state: present
+
+    - name: Get SHA1 checksum of NGINX file
+      command: /usr/bin/shasum -a 1 {{ nginx_file }}
+      register: cs
+    - debug:
+        msg: "{{ cs.stdout }}"
+
+    # - name: 
+    #   stat:
+    #     path: "{{ nginx_file }}"
+    #     checksum_algorithm: sha1
+    #   register: nf
+    # - debug:
+    #     msg: "{{ nf }}"

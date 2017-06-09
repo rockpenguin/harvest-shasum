@@ -1,0 +1,10 @@
+# Ignore dotfiles, except...
+
+.*
+!/.gitignore
+
+# Ignore the Ansible retry files
+*.retry
+
+# Ignore the downloaded NGINX tar file
+*.gz
