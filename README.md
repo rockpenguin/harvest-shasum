@@ -11,3 +11,7 @@ The Python way.  Just a simple Python script that downloads the file and calcula
 The Ansible way. Same thing as the Python script, it just downloads the ol' file and figures out ye olde SHA1 checksum. The only hitch seemed to be that the Ansible 'stat' module didn't produce a checksum on the Mac, so I reverted to using the 'command' module instead.
 
 To run it, use `ansible-playbook`: `ansible-playbook -i localhost, -c local shasum_nginx.yml`
+
+## shasum_nginx.sh
+
+Probably the easiest way to do it if your not going to automate the process: just a simple, down-home bash script that curls the file and calculates the checksum using `shasum` on the command line.
