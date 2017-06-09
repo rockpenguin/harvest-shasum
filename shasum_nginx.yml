@@ -22,6 +22,9 @@
         path: "{{ nginx_file }}"
         state: present
 
+    # For some reason, the stat module on the Mac doesn't generate the checksum as
+    # part of its duties, so we'll use the command module and use Mac's builtin
+    # shasum utility.
     - name: Get SHA1 checksum of NGINX file
       command: /usr/bin/shasum -a 1 {{ nginx_file }}
       register: cs
